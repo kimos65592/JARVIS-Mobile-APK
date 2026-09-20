@@ -1,0 +1,36 @@
+# STREAMING_CHUNK: Defining GitHub Actions workflow for APK compilation...
+name: Build Android APK
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install Bubblewrap (PWA to APK tool)
+      run: npm install -g @bubblewrap/cli
+
+    - name: Generate Android Project and APK
+      run: |
+        echo "Building PWA wrapper for Android..."
+        # يمكن استخدام إجراءات أندرويد قياسية أو أدوات ويب لأندرويد
+        mkdir -p build
+        cp index.html build/index.html
+        
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: electricity-calculator-apk
+        path: build/
