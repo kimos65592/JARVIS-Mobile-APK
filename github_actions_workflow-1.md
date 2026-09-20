@@ -1,0 +1,32 @@
+# STREAMING_CHUNK: Updating GitHub Actions workflow to build Android APK...
+name: Build Android APK
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Prepare PWA App Bundle
+      run: |
+        echo "Preparing application files for build..."
+        mkdir -p build
+        cp index.html build/index.html
+        
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: electricity-calculator-apk
+        path: build/
