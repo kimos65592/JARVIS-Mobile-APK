@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
         android:allowBackup="true"
-        android:label="حاسبة كارت الكهرباء"
+        android:label="ELECTRIC CARD"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ElectricityCardAPK">
+        android:theme="@style/Theme.ElectricityCardAPK"
+        android:icon="@drawable/app_icon"
+        android:roundIcon="@drawable/app_icon">
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
