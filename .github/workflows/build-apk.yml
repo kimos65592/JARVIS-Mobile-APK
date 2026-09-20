@@ -1,32 +1,33 @@
-# STREAMING_CHUNK: Updating GitHub Actions workflow to build Android APK...
-name: Build Android APK
+name: Build Electricity Card APK
 
 on:
-  push:
-    branches: [ "main", "master" ]
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
 
-    - name: Prepare PWA App Bundle
-      run: |
-        echo "Preparing application files for build..."
-        mkdir -p build
-        cp index.html build/index.html
-        
-    - name: Upload APK Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: electricity-calculator-apk
-        path: build/
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
+      - name: Build APK
+        run: ./gradlew :app:assembleDebug --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ElectricityCard-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
